@@ -1,11 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="th">
 <head>
   <meta charset="UTF-8" />
   <title>ข้อมูลค่าส่วนกลางของบ้าน</title>
-  <script type="module" src="./firebase-config.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script type="module" src="./firebase-config.js"></script>
   <script>
     const user = JSON.parse(localStorage.getItem("loggedInUser"));
     if (!user) {
@@ -44,11 +43,8 @@
     <button onclick="logout()" style="margin-top:20px;width:100%;padding:10px;background:#ef4444;color:white;border:none;border-radius:5px;cursor:pointer;">🚪 ออกจากระบบ</button>
   </div>
 
-  <script src="main.js"></script>
+  <!-- ✅ ใส่ type="module" เพื่อให้ใช้ import ได้ -->
+  <script type="module" src="main.js"></script>
 </body>
 </html>
 
-  </script>
-  <script src="main.js"></script>
-</body>
-</html>
