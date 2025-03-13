@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <title>ข้อมูลค่าส่วนกลางของบ้าน</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script type="module" src="./firebase-config.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script>
     const user = JSON.parse(localStorage.getItem("loggedInUser"));
     if (!user) {
@@ -25,7 +25,7 @@
 </head>
 <body onload="showUserData()" style="margin:0;font-family:sans-serif;background:#f9fafb;color:#111;">
   <div style="text-align:center;padding:30px 15px;">
-    <img src="680215-Photoroom.png" alt="logo" style="max-width:200px;margin-bottom:10px;" />
+    <img src="651354.jpg" alt="logo" style="max-width:200px;margin-bottom:10px;" />
     <h2 style="margin:0;">หมู่บ้านกิตตินคร กรีนทาวน์</h2>
     <p style="margin-top:5px;font-size:0.95rem;line-height:1.4;">
       399/279 ม.5 ต.บางเพรียง อ.บางบ่อ จ.สมุทรปราการ 10560<br />
@@ -35,19 +35,18 @@
 
   <div style="max-width:400px;margin:auto;text-align:center;">
     <div style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 10px;">
-  <h2 style="margin: 0;">📋 ข้อมูลค่าส่วนกลางของบ้านคุณ</h2>
-  <span style="font-size: 1rem; color: #4b5563;">📅 อัปเดตล่าสุด: 28 ก.พ. 68</span>
+      <h2 style="margin: 0;">📋 ข้อมูลค่าส่วนกลางของบ้านคุณ</h2>
+      <span style="font-size: 1rem; color: #4b5563;">📅 อัปเดตล่าสุด: 28 ก.พ. 68</span>
+    </div>
     <p id="house-id" style="font-size:1rem;"></p>
     <div id="result" style="margin-top:20px;"></div>
-    <div style="margin-top:20px;">
+    <div style="margin-top:20px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
       <a href="change-password.html" style="color:#3b82f6;text-decoration:none;">🔐 เปลี่ยนรหัสผ่าน</a>
-      <a href="payment.html" style="display:inline-block;margin-top:20px;color:#16a34a;text-decoration:none;font-weight:bold;">📤 ชำระค่าส่วนกลาง</a>
+      <a href="https://line.me/ti/g2/ZDauyxRug_VVvy_dd5uQyG8vZTed7Ix3qrhb6A?utm_source=invitation&utm_medium=link_copy&utm_campaign=default" target="_blank" style="color:#10b981;text-decoration:none;">💳 ชำระค่าส่วนกลาง</a>
     </div>
     <button onclick="logout()" style="margin-top:20px;width:100%;padding:10px;background:#ef4444;color:white;border:none;border-radius:5px;cursor:pointer;">🚪 ออกจากระบบ</button>
   </div>
 
-  <!-- ✅ ใส่ type="module" เพื่อให้ใช้ import ได้ -->
-  <script type="module" src="main.js"></script>
+  <script src="main.js"></script>
 </body>
 </html>
-
