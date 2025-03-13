@@ -1,28 +1,31 @@
+
 <!DOCTYPE html>
 <html lang="th">
 <head>
   <meta charset="UTF-8" />
+  <title>ค้นหาค่าส่วนกลางหมู่บ้าน</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ระบบค้นหาค่าส่วนกลางหมู่บ้าน</title>
-  <link rel="manifest" href="manifest.json" />
 </head>
 <body style="margin:0;font-family:sans-serif;background:#f9fafb;color:#111;">
-  <div style="min-height:100vh;display:flex;flex-direction:column;justify-content:flex-start;align-items:center;padding:40px 20px;text-align:center;">
-    <img src="651354.jpg" alt="โลโก้หมู่บ้าน" style="max-width:200px;margin-bottom:10px;" />
-    <div style="font-size:1.1rem;font-weight:600;margin-bottom:5px;">หมู่บ้านกิตตินคร กรีนทาวน์</div>
-    <div style="font-size:0.95rem;margin-bottom:15px;line-height:1.4;">
+  <div style="text-align:center;padding:30px 15px;">
+    <img src="651354.jpg" alt="logo" style="max-width:200px;margin-bottom:10px;" />
+    <h2 style="margin:0;">หมู่บ้านกิตตินคร กรีนทาวน์</h2>
+    <p style="margin-top:5px;font-size:0.95rem;line-height:1.4;">
       399/279 ม.5 ต.บางเพรียง อ.บางบ่อ จ.สมุทรปราการ 10560<br />
       เลขประจำตัวผู้เสียภาษี 0994002746323
-    </div>
-    <div id="root" style="width:100%;max-width:400px;"></div>
+    </p>
   </div>
 
-  <script type="module" src="main.js"></script>
-  <script>
-    const user = JSON.parse(localStorage.getItem("loggedInUser"));
-    if (!user) {{
-      window.location.href = "login.html";
-    }}
-  </script>
+  <div style="max-width:400px;margin:auto;text-align:center;">
+    <h2>🔍 ค้นหาค่าส่วนกลางหมู่บ้าน</h2>
+    <input type="text" id="search" placeholder="กรอกบ้านเลขที่ เช่น 399/1" style="width:100%;padding:10px;margin-bottom:10px;border:1px solid #ccc;border-radius:5px;" />
+    <button onclick="search()" style="width:100%;padding:10px;background:#3b82f6;color:white;border:none;border-radius:5px;cursor:pointer;">ค้นหา</button>
+    <div id="result" style="margin-top:20px;"></div>
+    <div style="margin-top:20px;">
+      <a href="change-password.html" style="color:#3b82f6;text-decoration:none;">🔐 เปลี่ยนรหัสผ่าน</a>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
 </body>
 </html>
