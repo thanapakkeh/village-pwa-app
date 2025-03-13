@@ -8,16 +8,11 @@ async function searchByHouseNumber(houseNumber) {
   resultDiv.innerHTML = "";
 
   try {
-    // ดึงข้อมูลจาก Firestore
     const docRef = doc(db, "houses", houseNumber);
     const docSnap = await getDoc(docRef);
-
-    // ดึงข้อมูลจาก JSON
     const response = await fetch("data.json");
     const jsonData = await response.json();
     const jsonMatch = jsonData.find(d => d["บ้านเลขที่"] === houseNumber);
-
-    // รวมข้อมูลจาก Firestore และ JSON
     if (docSnap.exists() && jsonMatch) {
       const firestoreData = docSnap.data();
 
@@ -32,7 +27,6 @@ async function searchByHouseNumber(houseNumber) {
         </div>
       `;
     } else if (jsonMatch) {
-      // เจอเฉพาะใน JSON
       resultDiv.innerHTML = `
         <div style="background:white;border-radius:8px;padding:15px;box-shadow:0 0 10px rgba(0,0,0,0.05);text-align:left;">
           <p>🏠 <strong>บ้านเลขที่:</strong> ${houseNumber}</p>
@@ -42,7 +36,6 @@ async function searchByHouseNumber(houseNumber) {
         </div>
       `;
     } else if (docSnap.exists()) {
-      // เจอเฉพาะใน Firestore
       const firestoreData = docSnap.data();
 
       resultDiv.innerHTML = `
@@ -53,7 +46,6 @@ async function searchByHouseNumber(houseNumber) {
         </div>
       `;
     } else {
-      // ไม่เจอข้อมูลเลย
       resultDiv.innerHTML = `<p style="color:red;">ไม่พบข้อมูลบ้านเลขที่นี้</p>`;
     }
   } catch (error) {
