@@ -3,7 +3,7 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8" />
-  <title>ค้นหาค่าส่วนกลางหมู่บ้าน</title>
+  <title>หมู่บ้านกิตตินคร กรีนทาวน์</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 <body style="margin:0;font-family:sans-serif;background:#f9fafb;color:#111;">
@@ -16,7 +16,15 @@
     </p>
   </div>
 
-  <div style="max-width:400px;margin:auto;text-align:center;">
+  <div id="app" style="max-width:400px;margin:auto;text-align:center;">
+    <h2>🔐 เข้าสู่ระบบ</h2>
+    <input type="text" id="username" placeholder="รหัสผู้ใช้ เช่น 399001" style="width:100%;padding:10px;margin-bottom:10px;border:1px solid #ccc;border-radius:5px;" />
+    <input type="password" id="password" placeholder="รหัสผ่าน" style="width:100%;padding:10px;margin-bottom:10px;border:1px solid #ccc;border-radius:5px;" />
+    <button onclick="login()" style="width:100%;padding:10px;background:#3b82f6;color:white;border:none;border-radius:5px;cursor:pointer;">เข้าสู่ระบบ</button>
+    <p id="loginStatus" style="margin-top:15px;font-size:0.9rem;"></p>
+  </div>
+
+  <div id="searchArea" style="display:none;max-width:400px;margin:30px auto;text-align:center;">
     <h2>🔍 ค้นหาค่าส่วนกลางหมู่บ้าน</h2>
     <input type="text" id="search" placeholder="กรอกบ้านเลขที่ เช่น 399/1" style="width:100%;padding:10px;margin-bottom:10px;border:1px solid #ccc;border-radius:5px;" />
     <button onclick="search()" style="width:100%;padding:10px;background:#3b82f6;color:white;border:none;border-radius:5px;cursor:pointer;">ค้นหา</button>
@@ -26,6 +34,56 @@
     </div>
   </div>
 
+  <script>
+    async function login() {
+      const id = document.getElementById("username").value.trim();
+      const pw = document.getElementById("password").value.trim();
+      const status = document.getElementById("loginStatus");
+
+      if (!id || !pw) {
+        status.innerText = "กรุณากรอกให้ครบถ้วน";
+        status.style.color = "red";
+        return;
+      }
+
+      try {
+        const res = await fetch("users.json");
+        const users = await res.json();
+        const found = users.find(u => u.id === id && u.password === pw);
+
+        if (found) {
+          localStorage.setItem("loggedInUser", JSON.stringify(found));
+          status.innerText = "✅ เข้าสู่ระบบสำเร็จ";
+          status.style.color = "green";
+          document.getElementById("app").style.display = "none";
+          document.getElementById("searchArea").style.display = "block";
+        } else {
+          status.innerText = "รหัสผู้ใช้หรือรหัสผ่านไม่ถูกต้อง";
+          status.style.color = "red";
+        }
+      } catch (err) {
+        status.innerText = "เกิดข้อผิดพลาดในการโหลดข้อมูล";
+        status.style.color = "red";
+      }
+    }
+
+    function search() {
+      const query = document.getElementById("search").value.trim();
+      const result = document.getElementById("result");
+      if (!query) {
+        result.innerText = "กรุณากรอกบ้านเลขที่";
+        return;
+      }
+      window.searchByHouseNumber(query); // main.js ควบคุม
+    }
+
+    // ถ้ามี login อยู่แล้วให้แสดงหน้าค้นหาเลย
+    const logged = localStorage.getItem("loggedInUser");
+    if (logged) {
+      document.getElementById("app").style.display = "none";
+      document.getElementById("searchArea").style.display = "block";
+    }
+  </script>
   <script src="main.js"></script>
 </body>
 </html>
