@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>เข้าสู่ระบบ - หมู่บ้านกิตตินคร</title>
+</head>
+<body style="margin:0;font-family:sans-serif;background:#f0f4f8;color:#111;display:flex;justify-content:center;align-items:center;min-height:100vh;">
+  <div style="background:white;padding:30px;border-radius:10px;box-shadow:0 4px 12px rgba(0,0,0,0.1);width:100%;max-width:360px;text-align:center;">
+    <h2 style="margin-bottom:20px;">🔐 เข้าสู่ระบบ</h2>
+    <input id="userId" placeholder="รหัสผู้ใช้ (เช่น 399001)" style="width:100%;padding:10px;margin-bottom:10px;border:1px solid #ccc;border-radius:5px;" />
+    <input id="password" type="password" placeholder="รหัสผ่าน" style="width:100%;padding:10px;margin-bottom:15px;border:1px solid #ccc;border-radius:5px;" />
+    <button onclick="login()" style="width:100%;padding:10px;background:#3b82f6;color:white;border:none;border-radius:5px;cursor:pointer;">เข้าสู่ระบบ</button>
+    <p id="error" style="color:red;margin-top:10px;"></p>
+  </div>
+
+  <script>
+    const users = [
+      [
+  {
+    "id": "399001",
+    "house": "399/1",
+    "password": "123456"
+  },
+  {
+    "id": "399002",
+    "house": "399/2",
+    "password": "123456"
+  },
+  {
+    "id": "399003",
+    "house": "399/3",
+    "password": "123456"
+  },
+  {
+    "id": "399004",
+    "house": "399/4",
+    "password": "123456"
+  },
+  {
+    "id": "399005",
+    "house": "399/5",
+    "password": "123456"
+  },
+  {
+    "id": "399006",
+    "house": "399/6",
+    "password": "123456"
+  },
+  {
+    "id": "399007",
+    "house": "399/7",
+    "password": "123456"
+  },
+  {
+    "id": "399008",
+    "house": "399/8",
+    "password": "123456"
+  },
+  {
+    "id": "399009",
+    "house": "399/9",
+    "password": "123456"
+  },
+  {
+    "id": "399010",
+    "house": "399/10",
+    "password": "123456"
+  }
+]
+    ];
+
+    function login() {
+      const id = document.getElementById("userId").value.trim();
+      const pw = document.getElementById("password").value.trim();
+      const user = users.find(u => u.id === id && u.password === pw);
+      const errorBox = document.getElementById("error");
+
+      if (user) {
+        localStorage.setItem("loggedInUser", JSON.stringify(user));
+        window.location.href = "index.html";
+      } else {
+        errorBox.textContent = "รหัสผู้ใช้หรือรหัสผ่านไม่ถูกต้อง";
+      }
+    }
+  </script>
+</body>
+</html>
