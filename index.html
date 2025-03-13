@@ -3,10 +3,27 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8" />
-  <title>หมู่บ้านกิตตินคร กรีนทาวน์</title>
+  <title>ข้อมูลค่าส่วนกลางของบ้าน</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>
+    const user = JSON.parse(localStorage.getItem("loggedInUser"));
+    if (!user) {
+      window.location.href = "login.html";
+    }
+
+    function logout() {
+      localStorage.removeItem("loggedInUser");
+      window.location.href = "login.html";
+    }
+
+    function showUserData() {
+      const houseId = user.house;
+      document.getElementById("house-id").innerText = "🏠 บ้านเลขที่: " + houseId;
+      window.searchByHouseNumber(houseId); // ฟังก์ชันใน main.js
+    }
+  </script>
 </head>
-<body style="margin:0;font-family:sans-serif;background:#f9fafb;color:#111;">
+<body onload="showUserData()" style="margin:0;font-family:sans-serif;background:#f9fafb;color:#111;">
   <div style="text-align:center;padding:30px 15px;">
     <img src="651354.jpg" alt="logo" style="max-width:200px;margin-bottom:10px;" />
     <h2 style="margin:0;">หมู่บ้านกิตตินคร กรีนทาวน์</h2>
@@ -16,73 +33,20 @@
     </p>
   </div>
 
-  <div id="app" style="max-width:400px;margin:auto;text-align:center;">
-    <h2>🔐 เข้าสู่ระบบ</h2>
-    <input type="text" id="username" placeholder="รหัสผู้ใช้ เช่น 399001" style="width:100%;padding:10px;margin-bottom:10px;border:1px solid #ccc;border-radius:5px;" />
-    <input type="password" id="password" placeholder="รหัสผ่าน" style="width:100%;padding:10px;margin-bottom:10px;border:1px solid #ccc;border-radius:5px;" />
-    <button onclick="login()" style="width:100%;padding:10px;background:#3b82f6;color:white;border:none;border-radius:5px;cursor:pointer;">เข้าสู่ระบบ</button>
-    <p id="loginStatus" style="margin-top:15px;font-size:0.9rem;"></p>
-  </div>
-
-  <div id="searchArea" style="display:none;max-width:400px;margin:30px auto;text-align:center;">
-    <h2>🔍 ค้นหาค่าส่วนกลางหมู่บ้าน</h2>
-    <input type="text" id="search" placeholder="กรอกบ้านเลขที่ เช่น 399/1" style="width:100%;padding:10px;margin-bottom:10px;border:1px solid #ccc;border-radius:5px;" />
-    <button onclick="search()" style="width:100%;padding:10px;background:#3b82f6;color:white;border:none;border-radius:5px;cursor:pointer;">ค้นหา</button>
+  <div style="max-width:400px;margin:auto;text-align:center;">
+    <h2>📋 ข้อมูลค่าส่วนกลางของบ้านคุณ</h2>
+    <p id="house-id" style="font-size:1rem;"></p>
     <div id="result" style="margin-top:20px;"></div>
     <div style="margin-top:20px;">
       <a href="change-password.html" style="color:#3b82f6;text-decoration:none;">🔐 เปลี่ยนรหัสผ่าน</a>
     </div>
+    <button onclick="logout()" style="margin-top:20px;width:100%;padding:10px;background:#ef4444;color:white;border:none;border-radius:5px;cursor:pointer;">🚪 ออกจากระบบ</button>
   </div>
 
-  <script>
-    async function login() {
-      const id = document.getElementById("username").value.trim();
-      const pw = document.getElementById("password").value.trim();
-      const status = document.getElementById("loginStatus");
+  <script src="main.js"></script>
+</body>
+</html>
 
-      if (!id || !pw) {
-        status.innerText = "กรุณากรอกให้ครบถ้วน";
-        status.style.color = "red";
-        return;
-      }
-
-      try {
-        const res = await fetch("users.json");
-        const users = await res.json();
-        const found = users.find(u => u.id === id && u.password === pw);
-
-        if (found) {
-          localStorage.setItem("loggedInUser", JSON.stringify(found));
-          status.innerText = "✅ เข้าสู่ระบบสำเร็จ";
-          status.style.color = "green";
-          document.getElementById("app").style.display = "none";
-          document.getElementById("searchArea").style.display = "block";
-        } else {
-          status.innerText = "รหัสผู้ใช้หรือรหัสผ่านไม่ถูกต้อง";
-          status.style.color = "red";
-        }
-      } catch (err) {
-        status.innerText = "เกิดข้อผิดพลาดในการโหลดข้อมูล";
-        status.style.color = "red";
-      }
-    }
-
-    function search() {
-      const query = document.getElementById("search").value.trim();
-      const result = document.getElementById("result");
-      if (!query) {
-        result.innerText = "กรุณากรอกบ้านเลขที่";
-        return;
-      }
-      window.searchByHouseNumber(query); // main.js ควบคุม
-    }
-
-    // ถ้ามี login อยู่แล้วให้แสดงหน้าค้นหาเลย
-    const logged = localStorage.getItem("loggedInUser");
-    if (logged) {
-      document.getElementById("app").style.display = "none";
-      document.getElementById("searchArea").style.display = "block";
-    }
   </script>
   <script src="main.js"></script>
 </body>
