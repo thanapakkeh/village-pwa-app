@@ -17,7 +17,7 @@ window.searchByHouseNumber = async function (houseNumber) {
       <div style="background:white;border-radius:8px;padding:15px;box-shadow:0 0 10px rgba(0,0,0,0.05);text-align:left;">
         <p>📅 <strong>ช่วงค้างชำระ:</strong> ${match["ช่วงค้างชำระ"]}</p>
         <p>💰 <strong>ยอดรวมค้างชำระ:</strong> ${match["ยอดรวมค้างชำระ"]} บาท</p>
-        <p style="font-size:0.9rem;color:#555;">📅 อัปเดตล่าสุด: 28 ก.พ. 68</p>
+        <p style="font-size:0.9rem;color:#666;margin-top:5px;">📅 อัปเดตล่าสุด: 28 ก.พ. 68</p>
         ${
           match["ลิงก์ใบแจ้งหนี้"]
             ? `<a href="${match["ลิงก์ใบแจ้งหนี้"]}" target="_blank"
