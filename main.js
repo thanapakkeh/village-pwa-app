@@ -20,6 +20,7 @@ async function searchByHouseNumber(houseNumber) {
                   box-shadow:0 0 10px rgba(0,0,0,0.05);text-align:left;">
         <p>📅 <strong>ช่วงค้างชำระ:</strong> ${match["ช่วงค้างชำระ"]}</p>
         <p>💰 <strong>ยอดรวมค้างชำระ:</strong> ${match["ยอดรวมค้างชำระ"]} บาท</p>
+        <p style="font-size:0.9rem;color:#555;">📅 อัปเดตล่าสุด: 28 ก.พ. 68</p>
         ${match["ลิงก์ใบแจ้งหนี้"]
           ? `<a href="${match["ลิงก์ใบแจ้งหนี้"]}" target="_blank"
                 style="display:inline-block;margin-top:10px;padding:10px 15px;
