@@ -1,17 +1,13 @@
-// นำเข้า Firebase app จาก config (ถ้าใช้ Firebase ด้วย)
 import { app } from "./firebase-config.js";
 
-// ฟังก์ชันหลักสำหรับค้นหาและแสดงข้อมูลค่าส่วนกลาง
 async function searchByHouseNumber(houseNumber) {
   const resultDiv = document.getElementById("result");
   resultDiv.innerHTML = ""; // เคลียร์ข้อมูลเก่าออกก่อน
 
   try {
-    // โหลดข้อมูลจาก data.json
-    const res = await fetch("data.json");
+     const res = await fetch("data.json");
     const data = await res.json();
 
-    // ค้นหาข้อมูลจากบ้านเลขที่
     const match = data.find(d => d["บ้านเลขที่"] === houseNumber);
 
     if (!match) {
@@ -19,8 +15,7 @@ async function searchByHouseNumber(houseNumber) {
       return;
     }
 
-    // แสดงผลข้อมูลที่พบ
-    resultDiv.innerHTML = `
+      resultDiv.innerHTML = `
       <div style="background:white;border-radius:8px;padding:15px;box-shadow:0 0 10px rgba(0,0,0,0.05);text-align:left;">
         <p>📅 <strong>ช่วงค้างชำระ:</strong> ${match["ช่วงค้างชำระ"]}</p>
         <p>💰 <strong>ยอดรวมค้างชำระ:</strong> ${match["ยอดรวมค้างชำระ"]} บาท</p>
@@ -40,7 +35,6 @@ async function searchByHouseNumber(houseNumber) {
   }
 }
 
-// ฟังก์ชันที่ถูกเรียกตอนโหลดหน้าเว็บ
 window.showUserData = function () {
   const user = JSON.parse(localStorage.getItem("loggedInUser"));
   if (!user) {
@@ -53,7 +47,6 @@ window.showUserData = function () {
   searchByHouseNumber(houseId);
 }
 
-// ฟังก์ชัน logout
 window.logout = function () {
   localStorage.removeItem("loggedInUser");
   window.location.href = "login.html";
