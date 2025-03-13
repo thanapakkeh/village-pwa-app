@@ -1,8 +1,6 @@
-// main.js
-
-async function searchByHouseNumber(houseNumber) {
+window.searchByHouseNumber = async function (houseNumber) {
   const resultDiv = document.getElementById("result");
-  resultDiv.innerHTML = ""; // ล้างหน้าจอเก่า
+  resultDiv.innerHTML = "";
 
   try {
     const res = await fetch("data.json");
@@ -16,28 +14,32 @@ async function searchByHouseNumber(houseNumber) {
     }
 
     resultDiv.innerHTML = `
-      <div style="background:white;border-radius:8px;padding:15px;
-                  box-shadow:0 0 10px rgba(0,0,0,0.05);text-align:left;">
+      <div style="background:white;border-radius:8px;padding:15px;box-shadow:0 0 10px rgba(0,0,0,0.05);text-align:left;">
         <p>📅 <strong>ช่วงค้างชำระ:</strong> ${match["ช่วงค้างชำระ"]}</p>
         <p>💰 <strong>ยอดรวมค้างชำระ:</strong> ${match["ยอดรวมค้างชำระ"]} บาท</p>
-
         <p style="font-size:0.9rem;color:#555;">📅 อัปเดตล่าสุด: 28 ก.พ. 68</p>
-        
-        ${match["ลิงก์ใบแจ้งหนี้"]
-          ? `<a href="${match["ลิงก์ใบแจ้งหนี้"]}" target="_blank"
-                style="display:inline-block;margin-top:10px;padding:10px 15px;
-                       background:#10b981;color:white;border-radius:5px;text-decoration:none;">
-                📥 ดาวน์โหลดใบแจ้งหนี้</a>`
-          : ""}
+        ${
+          match["ลิงก์ใบแจ้งหนี้"]
+            ? `<a href="${match["ลิงก์ใบแจ้งหนี้"]}" target="_blank"
+                  style="display:inline-block;margin-top:10px;padding:10px 15px;
+                  background:#10b981;color:white;border-radius:5px;text-decoration:none;">
+                  📥 ดาวน์โหลดใบแจ้งหนี้</a><br/>`
+            : ""
+        }
+        <a href="https://line.me/ti/g2/ZDauyxRug_VVvy_dd5uQyG8vZTed7Ix3qrhb6A"
+           target="_blank"
+           style="display:inline-block;margin-top:10px;padding:10px 15px;
+           background:#3b82f6;color:white;border-radius:5px;text-decoration:none;">
+           📤 แจ้งสลิปการโอน
+        </a>
       </div>
     `;
   } catch (error) {
     console.error("❌ เกิดข้อผิดพลาด:", error);
     resultDiv.innerHTML = `<p style="color:red;">❌ เกิดข้อผิดพลาดในการโหลดข้อมูล</p>`;
   }
-}
+};
 
-// เรียกตอนโหลดหน้า
 window.showUserData = function () {
   const user = JSON.parse(localStorage.getItem("loggedInUser"));
   if (!user) {
@@ -50,7 +52,6 @@ window.showUserData = function () {
   searchByHouseNumber(houseId);
 };
 
-// ออกจากระบบ
 window.logout = function () {
   localStorage.removeItem("loggedInUser");
   window.location.href = "login.html";
