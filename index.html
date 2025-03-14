@@ -30,27 +30,36 @@
 <link rel="icon" href="651354.jpg" type="image/png" />
 <link rel="manifest" href="manifest.json" />
 </head>
-<body onload="showUserData()" style="margin:0;font-family:sans-serif;background:#f9fafb;color:#111;">
+<body onload="showUserData()" style="font-family:sans-serif;background:#f9fafb;color:#111;">
+
   <div style="text-align:center;padding:30px 15px;">
     <img src="651354.jpg" alt="logo" style="max-width:200px;margin-bottom:10px;" />
     <h2 style="margin:0;">หมู่บ้านกิตตินคร กรีนทาวน์</h2>
-    <p style="margin-top:5px;font-size:0.95rem;line-height:1.4;">
+    <p style="margin-top:5px; font-size:0.95rem; line-height:1.4;">
       399/279 ม.5 ต.บางเพรียง อ.บางบ่อ จ.สมุทรปราการ 10560<br />
       เลขประจำตัวผู้เสียภาษี 0994002746323
     </p>
   </div>
 
-  <div style="max-width:400px;margin:auto;text-align:center;">
-    <h2>📋 ข้อมูลค่าส่วนกลางของบ้านคุณ</h2>
-    <p id="house-id" style="font-size:1rem;"></p>
-    <div id="result" style="margin-top:20px;"></div>
-    <div style="margin-top:20px;">
-      <a href="change-password.html" style="color:#3b82f6;text-decoration:none;">🔐 เปลี่ยนรหัสผ่าน</a>
-    </div>
-    <button onclick="logout()" style="margin-top:20px;width:100%;padding:10px;background:#ef4444;color:white;border:none;border-radius:5px;cursor:pointer;">🚪 ออกจากระบบ</button>
-  </div>
+  <div style="max-width:400px;margin:0 auto;">
+    <h3 style="text-align:center;margin-top:20px;">📋 ข้อมูลค่าส่วนกลางของบ้านคุณ</h3>
+    <p style="text-align:center;">📅 อัปเดตล่าสุด: <strong>28 ก.พ. 68</strong></p>
+    <p style="text-align:center;" id="house-id"></p>
 
-  <script src="main.js"></script>
+    <div id="result" style="margin-top:20px;"></div>
+
+    <div style="display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin-top:20px;">
+      <a href="change-password.html" style="text-decoration:none;">
+        <button style="padding:10px 15px;background:#fbbf24;color:#111;border:none;border-radius:6px;">
+          🔒 เปลี่ยนรหัสผ่าน
+        </button>
+      </a>
+
+      <button onclick="logout()" style="padding:10px 15px;background:#ef4444;color:white;border:none;border-radius:6px;">
+        🚪 ออกจากระบบ
+      </button>
+    </div>
+  </div>
 </body>
 </html>
 
