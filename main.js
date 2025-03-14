@@ -18,35 +18,55 @@ window.searchByHouseNumber = async function (houseNumber) {
 
     if (matchWithData) {
       resultDiv.innerHTML = `
-  <div style="background:white;border-radius:8px;padding:15px;box-shadow:0 0 10px rgba(0,0,0,0.05);text-align:left;">
+        <div style="
+          background: white;
+          border-radius: 12px;
+          padding: 20px;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+          text-align: left;
+          font-size: 1rem;
+          line-height: 1.6;
+        ">
+          <p>📅 <strong>ช่วงค้างชำระ:</strong> ${matchWithData["ช่วงค้างชำระ"]}</p>
+          <p>💰 <strong>ยอดรวมค้างชำระ:</strong> ${matchWithData["ยอดรวมค้างชำระ"]} บาท</p>
+          <p style="font-size:0.9rem; color:#666; margin-top:8px;">📅 อัปเดตล่าสุด: ${matchWithData["อัปเดตล่าสุด"]}</p>
 
-    <p>📅 <strong>ช่วงค้างชำระ:</strong> ${match["ช่วงค้างชำระ"]}</p>
-    <p>💰 <strong>ยอดรวมค้างชำระ:</strong> ${match["ยอดรวมค้างชำระ"]} บาท</p>
-    <p style="font-size:0.9rem;color:#666;margin-top:5px;">📅 อัปเดตล่าสุด: ${match["อัปเดตล่าสุด"]}</p>
-
-   <div style="display: flex; justify-content: center; margin-top: 15px;">
-  <a href="payment.html"
-     style="
-        background: #6366f1;
-        color: white;
-        padding: 12px 24px;
-        border-radius: 8px;
-        text-decoration: none;
-        font-weight: bold;
-        font-size: 1rem;
-        display: inline-block;
-        text-align: center;
-        min-width: 200px;">
-     💳 ชำระค่าส่วนกลาง
-  </a>
-</div>
-`;
+          <div style="margin-top: 25px; display: flex; flex-direction: column; gap: 12px;">
+            <a href="payment.html"
+              style="background: #10b981; color: white; padding: 12px; border-radius: 8px;
+                     text-align: center; text-decoration: none; font-weight: bold;">
+              💳 ชำระค่าส่วนกลาง
+            </a>
+            <a href="contact.html"
+              style="background: #3b82f6; color: white; padding: 12px; border-radius: 8px;
+                     text-align: center; text-decoration: none; font-weight: bold;">
+              📞 ติดต่อเจ้าหน้าที่
+            </a>
+          </div>
+        </div>
+      `;
     } else if (matchWithoutData) {
       resultDiv.innerHTML = `
-        <div style="background:white;border-radius:8px;padding:15px;box-shadow:0 0 10px rgba(0,0,0,0.05);text-align:left;">
+        <div style="
+          background: white;
+          border-radius: 12px;
+          padding: 20px;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+          text-align: left;
+          font-size: 1rem;
+          line-height: 1.6;
+        ">
           <p>✅ <strong>ไม่มีค้างชำระ</strong></p>
           <p>💰 <strong>ยอดรวมค้างชำระ:</strong> 0 บาท</p>
-          <p style="font-size:0.9rem;color:#666;margin-top:5px;">📅 อัปเดตล่าสุด: 28 ก.พ. 68</p>
+          <p style="font-size:0.9rem; color:#666; margin-top:8px;">📅 อัปเดตล่าสุด: 28 ก.พ. 68</p>
+
+          <div style="margin-top: 25px;">
+            <a href="contact.html"
+              style="background: #3b82f6; color: white; padding: 12px; border-radius: 8px;
+                     text-align: center; text-decoration: none; font-weight: bold; display: block;">
+              📞 ติดต่อเจ้าหน้าที่
+            </a>
+          </div>
         </div>
       `;
     } else {
