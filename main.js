@@ -24,16 +24,22 @@ window.searchByHouseNumber = async function (houseNumber) {
     <p>💰 <strong>ยอดรวมค้างชำระ:</strong> ${match["ยอดรวมค้างชำระ"]} บาท</p>
     <p style="font-size:0.9rem;color:#666;margin-top:5px;">📅 อัปเดตล่าสุด: ${match["อัปเดตล่าสุด"]}</p>
 
-    <div style="display:flex;justify-content:center;margin-top:15px;">
-      <a href="payment.html"
-         style="padding:10px 20px;
-                background:#6366f1;color:white;border-radius:6px;
-                text-decoration:none;font-weight:bold;display:inline-block;">
-        💳 ชำระค่าส่วนกลาง
-      </a>
-    </div>
-
-  </div>
+   <div style="display: flex; justify-content: center; margin-top: 15px;">
+  <a href="payment.html"
+     style="
+        background: #6366f1;
+        color: white;
+        padding: 12px 24px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 1rem;
+        display: inline-block;
+        text-align: center;
+        min-width: 200px;">
+     💳 ชำระค่าส่วนกลาง
+  </a>
+</div>
 `;
     } else if (matchWithoutData) {
       resultDiv.innerHTML = `
