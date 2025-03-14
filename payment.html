@@ -21,27 +21,11 @@
     }
 
     .logo {
-      max-width: 150px;
-      margin: 0 auto 15px;
-    }
-
-    h2 {
-      color: #000;
-      margin-bottom: 10px;
-    }
-
-    .info-box {
-      background: #fffbea;
-      padding: 15px;
+      width: 100%;
+      max-width: 100%;
       border-radius: 10px;
-      margin-bottom: 20px;
-      text-align: left;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .info-box p {
-      margin: 5px 0;
-      font-size: 1rem;
+      margin-bottom: 15px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.1);
     }
 
     .btn {
@@ -58,29 +42,25 @@
     }
 
     .btn-copy { background: #3b82f6; }
-    .btn-upload { background: #10b981; }
     .btn-line { background: #22c55e; }
     .btn-back { background: #ef4444; }
 
     .btn:hover {
       opacity: 0.9;
     }
+
+    h2 {
+      margin-top: 0;
+      color: #111;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <img src="651354-removebg-preview.png" alt="logo" class="logo" />
-    <h2>🏦 ชำระค่าส่วนกลาง</h2>
-    <p style="margin-top:-5px;">กรุณาโอนเงินเข้าบัญชีของหมู่บ้านตามข้อมูลด้านล่าง</p>
-
-    <div class="info-box">
-      <p>🏛️ <strong>ธนาคาร:</strong> กรุงศรีฯ</p>
-      <p>👤 <strong>ชื่อบัญชี:</strong> นิติบุคคลหมู่บ้านจัดสรร</p>
-      <p>💳 <strong>เลขบัญชี:</strong> 6100003754</p>
-    </div>
+    <h2>💳 ชำระค่าส่วนกลาง</h2>
+    <img src="770282.jpg" alt="บัญชีสำหรับโอน" class="logo" />
 
     <button class="btn btn-copy" onclick="copyAccount()">📋 คัดลอกเลขบัญชี</button>
-    <button class="btn btn-upload" onclick="uploadSlip()">🖼️ อัปโหลดสลิป</button>
     <button class="btn btn-line" onclick="sendToLine()">💬 ส่งสลิปผ่านไลน์กลุ่ม</button>
     <button class="btn btn-back" onclick="goHome()">🔙 กลับหน้าหลัก</button>
   </div>
@@ -90,10 +70,6 @@
       navigator.clipboard.writeText("6100003754").then(() => {
         alert("คัดลอกเลขบัญชีแล้ว!");
       });
-    }
-
-    function uploadSlip() {
-      alert("ระบบอัปโหลดสลิปยังไม่เปิดใช้งาน กรุณาส่งผ่านไลน์แทน");
     }
 
     function sendToLine() {
