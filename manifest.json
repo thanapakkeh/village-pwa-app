@@ -1,9 +1,16 @@
 {
-  "name": "Village PWA",
-  "short_name": "Village",
-  "start_url": ".",
+  "name": "กิตตินคร 399",
+  "short_name": "399",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#3b82f6",
-  "icons": []
+  "theme_color": "#4CAF50",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/logo_512x512_whitebg.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
 }
