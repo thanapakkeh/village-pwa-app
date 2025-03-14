@@ -30,11 +30,10 @@ window.searchByHouseNumber = async function (houseNumber) {
                     📥 ดาวน์โหลดใบแจ้งหนี้</a><br/>`
               : ""
           }
-          <a href="https://line.me/ti/g2/ZDauyxRug_VVvy_dd5uQyG8vZTed7Ix3qrhb6A"
-            target="_blank"
+          <a href="payment.html"
             style="display:inline-block;margin-top:10px;padding:10px 15px;
-            background:#3b82f6;color:white;border-radius:5px;text-decoration:none;">
-            📤 แจ้งสลิปการโอน
+            background:#6366f1;color:white;border-radius:5px;text-decoration:none;">
+            💳 ชำระค่าส่วนกลาง
           </a>
         </div>
       `;
