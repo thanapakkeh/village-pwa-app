@@ -18,25 +18,23 @@ window.searchByHouseNumber = async function (houseNumber) {
 
     if (matchWithData) {
       resultDiv.innerHTML = `
-        <div style="background:white;border-radius:8px;padding:15px;box-shadow:0 0 10px rgba(0,0,0,0.05);text-align:left;">
-          <p>📅 <strong>ช่วงค้างชำระ:</strong> ${matchWithData["ช่วงค้างชำระ"]}</p>
-          <p>💰 <strong>ยอดรวมค้างชำระ:</strong> ${matchWithData["ยอดรวมค้างชำระ"]} บาท</p>
-          <p style="font-size:0.9rem;color:#666;margin-top:5px;">📅 อัปเดตล่าสุด: ${matchWithData["อัปเดตล่าสุด"]}</p>
-          ${
-            matchWithData["ลิงก์ใบแจ้งหนี้"]
-              ? `<a href="${matchWithData["ลิงก์ใบแจ้งหนี้"]}" target="_blank"
-                    style="display:inline-block;margin-top:10px;padding:10px 15px;
-                    background:#10b981;color:white;border-radius:5px;text-decoration:none;">
-                    📥 ดาวน์โหลดใบแจ้งหนี้</a><br/>`
-              : ""
-          }
-          <a href="payment.html"
-            style="display:inline-block;margin-top:10px;padding:10px 15px;
-            background:#6366f1;color:white;border-radius:5px;text-decoration:none;">
-            💳 ชำระค่าส่วนกลาง
-          </a>
-        </div>
-      `;
+  <div style="background:white;border-radius:8px;padding:15px;box-shadow:0 0 10px rgba(0,0,0,0.05);text-align:left;">
+
+    <p>📅 <strong>ช่วงค้างชำระ:</strong> ${match["ช่วงค้างชำระ"]}</p>
+    <p>💰 <strong>ยอดรวมค้างชำระ:</strong> ${match["ยอดรวมค้างชำระ"]} บาท</p>
+    <p style="font-size:0.9rem;color:#666;margin-top:5px;">📅 อัปเดตล่าสุด: ${match["อัปเดตล่าสุด"]}</p>
+
+    <div style="display:flex;justify-content:center;margin-top:15px;">
+      <a href="payment.html"
+         style="padding:10px 20px;
+                background:#6366f1;color:white;border-radius:6px;
+                text-decoration:none;font-weight:bold;display:inline-block;">
+        💳 ชำระค่าส่วนกลาง
+      </a>
+    </div>
+
+  </div>
+`;
     } else if (matchWithoutData) {
       resultDiv.innerHTML = `
         <div style="background:white;border-radius:8px;padding:15px;box-shadow:0 0 10px rgba(0,0,0,0.05);text-align:left;">
