@@ -4,86 +4,103 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ชำระค่าส่วนกลาง</title>
+  <link rel="manifest" href="manifest.json" />
   <style>
     body {
-      font-family: sans-serif;
-      background: #f0fdf4;
-      color: #111;
       margin: 0;
+      font-family: "Sarabun", sans-serif;
+      background: #effdf3;
+      color: #111;
+    }
+
+    .container {
+      max-width: 420px;
+      margin: auto;
       padding: 20px;
       text-align: center;
     }
-    .container {
-      max-width: 400px;
-      margin: auto;
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+
+    .logo {
+      max-width: 150px;
+      margin: 0 auto 15px;
     }
+
+    h2 {
+      color: #000;
+      margin-bottom: 10px;
+    }
+
+    .info-box {
+      background: #fffbea;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      text-align: left;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .info-box p {
+      margin: 5px 0;
+      font-size: 1rem;
+    }
+
     .btn {
       display: block;
       width: 100%;
-      margin-top: 15px;
-      padding: 10px;
-      background: #22c55e;
-      color: white;
+      margin: 10px 0;
+      padding: 12px;
       border: none;
       border-radius: 8px;
+      color: white;
       font-size: 1rem;
+      font-weight: bold;
       cursor: pointer;
     }
-    .btn.copy {
-      background: #3b82f6;
-    }
-    .btn.back {
-      background: #ef4444;
-      margin-top: 30px;
-    }
-    img {
-      max-width: 100%;
-      border-radius: 8px;
-      margin-top: 15px;
+
+    .btn-copy { background: #3b82f6; }
+    .btn-upload { background: #10b981; }
+    .btn-line { background: #22c55e; }
+    .btn-back { background: #ef4444; }
+
+    .btn:hover {
+      opacity: 0.9;
     }
   </style>
 </head>
 <body>
-
   <div class="container">
-    <h2>📤 ชำระค่าส่วนกลาง</h2>
-    <p>กรุณาโอนเงินเข้าบัญชีของหมู่บ้านตามข้อมูลด้านล่าง</p>
+    <img src="651354-removebg-preview.png" alt="logo" class="logo" />
+    <h2>🏦 ชำระค่าส่วนกลาง</h2>
+    <p style="margin-top:-5px;">กรุณาโอนเงินเข้าบัญชีของหมู่บ้านตามข้อมูลด้านล่าง</p>
 
-    <div style="background:#fef9c3;padding:10px;border-radius:8px;margin:15px 0;">
-      <p>🏦 <strong>ธนาคาร:</strong> กรุงศรีฯ</p>
+    <div class="info-box">
+      <p>🏛️ <strong>ธนาคาร:</strong> กรุงศรีฯ</p>
       <p>👤 <strong>ชื่อบัญชี:</strong> นิติบุคคลหมู่บ้านจัดสรร</p>
-      <p>💳 <strong>เลขบัญชี:</strong> <span id="account-number">6100003754</span></p>
+      <p>💳 <strong>เลขบัญชี:</strong> 6100003754</p>
     </div>
 
-    <button class="btn copy" onclick="copyAccount()">📋 คัดลอกเลขบัญชี</button>
-    <button class="btn" onclick="openImage()">🖼️ ดูรูปภาพบัญชี</button>
-    <a href="https://line.me/ti/g2/ZDauyxRug_VVvy_dd5uQyG8vZTed7Ix3qrhb6A?utm_source=invitation&utm_medium=link_copy&utm_campaign=default" target="_blank" class="btn" style="background:#06c755;margin-top:10px;">
-  💬 ส่งสลิปผ่านไลน์กลุ่ม
-</a>
-    <button class="btn back" onclick="goBack()">🔙 กลับหน้าหลัก</button>
-
-    <img id="account-img" src="770282.jpg" alt="บัญชีธนาคาร" style="display:none;" />
+    <button class="btn btn-copy" onclick="copyAccount()">📋 คัดลอกเลขบัญชี</button>
+    <button class="btn btn-upload" onclick="uploadSlip()">🖼️ อัปโหลดสลิป</button>
+    <button class="btn btn-line" onclick="sendToLine()">💬 ส่งสลิปผ่านไลน์กลุ่ม</button>
+    <button class="btn btn-back" onclick="goHome()">🔙 กลับหน้าหลัก</button>
   </div>
 
   <script>
     function copyAccount() {
-      const acc = document.getElementById("account-number").innerText;
-      navigator.clipboard.writeText(acc).then(() => {
-        alert("📋 คัดลอกเลขบัญชีแล้ว: " + acc);
+      navigator.clipboard.writeText("6100003754").then(() => {
+        alert("คัดลอกเลขบัญชีแล้ว!");
       });
     }
 
-    function openImage() {
-      const img = document.getElementById("account-img");
-      img.style.display = "block";
-      img.scrollIntoView({ behavior: "smooth" });
+    function uploadSlip() {
+      alert("ระบบอัปโหลดสลิปยังไม่เปิดใช้งาน กรุณาส่งผ่านไลน์แทน");
     }
 
-    function goBack() {
+    function sendToLine() {
+      window.open("https://line.me/ti/g2/ZDauyxRug_VVvy_dd5uQyG8vZTed7Ix3qrhb6A", "_blank");
+    }
+
+    function goHome() {
       window.location.href = "index.html";
     }
   </script>
