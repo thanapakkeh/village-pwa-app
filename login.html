@@ -15,13 +15,25 @@
     </p>
   </div>
 
-  <div id="app" style="max-width:400px;margin:auto;text-align:center;">
-    <h2>🔐 เข้าสู่ระบบ</h2>
-    <input type="text" id="username" placeholder="รหัสผู้ใช้ เช่น 399001" style="width:100%;padding:10px;margin-bottom:10px;border:1px solid #ccc;border-radius:5px;" />
-    <input type="password" id="password" placeholder="รหัสผ่าน" style="width:100%;padding:10px;margin-bottom:10px;border:1px solid #ccc;border-radius:5px;" />
-    <button onclick="login()" style="width:100%;padding:10px;background:#3b82f6;color:white;border:none;border-radius:5px;cursor:pointer;">เข้าสู่ระบบ</button>
-    <p id="loginStatus" style="margin-top:15px;font-size:0.9rem;"></p>
-  </div>
+  <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;margin-top:30px;">
+  <input type="text" id="username" placeholder="รหัสผู้ใช้ เช่น 399001"
+    style="width: 300px; max-width: 90%; padding: 12px; border-radius: 8px; border: 1px solid #ccc; margin-bottom: 10px;" />
+
+  <input type="password" id="password" placeholder="รหัสผ่าน"
+    style="width: 300px; max-width: 90%; padding: 12px; border-radius: 8px; border: 1px solid #ccc; margin-bottom: 20px;" />
+
+  <button onclick="login()" style="
+      width: 300px; max-width: 90%;
+      padding: 12px;
+      background-color: #3b82f6;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;">
+    เข้าสู่ระบบ
+  </button>
+</div>
 
   <script>
     async function login() {
