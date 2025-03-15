@@ -1,9 +1,10 @@
+// ฟังก์ชันโหลดข้อมูลจาก Google Sheets (ผ่าน opensheet.elk.sh)
 window.searchByHouseNumber = async function (houseNumber) {
   const resultDiv = document.getElementById("result");
   resultDiv.innerHTML = "";
 
   try {
-    // โหลดข้อมูลจากทั้ง 2 ชีต
+    // ดึงข้อมูลจาก 2 ชีต
     const [dueRes, clearRes] = await Promise.all([
       fetch("https://opensheet.elk.sh/18GPxoGr7cZh1-MofAlSlHUPvZdq0RLDEMUiY7EP4LCo/ค้างชำระ"),
       fetch("https://opensheet.elk.sh/18GPxoGr7cZh1-MofAlSlHUPvZdq0RLDEMUiY7EP4LCo/ไม่ค้างชำระ")
@@ -12,24 +13,25 @@ window.searchByHouseNumber = async function (houseNumber) {
     const dueData = await dueRes.json();
     const clearData = await clearRes.json();
 
-    // สร้าง map บ้านเลขที่
+    // รวมข้อมูลโดยให้ "ค้างชำระ" ทับ "ไม่ค้างชำระ" ถ้าบ้านเลขที่ซ้ำ
     const houseMap = {};
 
-    // ใส่ข้อมูลจาก "ไม่ค้างชำระ" ก่อน
     clearData.forEach(item => {
       houseMap[item["บ้านเลขที่"]] = item;
     });
 
-    // ใส่ข้อมูลจาก "ค้างชำระ" ทับลงไป (กรณีบ้านซ้ำ)
     dueData.forEach(item => {
-      houseMap[item["บ้านเลขที่"]] = item;
+      houseMap[item["บ้านเลขที่"]] = item; // ทับด้วยข้อมูลค้างชำระ
     });
 
-    // ค้นหาข้อมูลของบ้านเลขที่ที่ต้องการ
+    // ค้นหาข้อมูลบ้านที่ต้องการ
     const match = houseMap[houseNumber];
 
     if (match) {
-      if (match["สถานะ"] === "ค้างชำระ") {
+      const status = match["สถานะ"]?.trim();
+
+      if (status === "มียอดชำระ") {
+        // กรณีค้างชำระ
         resultDiv.innerHTML = `
           <div style="background:white;border-radius:12px;padding:20px;box-shadow:0 4px 12px rgba(0,0,0,0.06);text-align:left;">
             <p style="font-size: 1.2rem;"><strong>📅 ช่วงค้างชำระ:</strong> ${match["ช่วงค้างชำระ"] || "-"}</p>
@@ -60,6 +62,7 @@ window.searchByHouseNumber = async function (houseNumber) {
           </div>
         `;
       } else {
+        // กรณีไม่ค้างชำระ
         resultDiv.innerHTML = `
           <div style="background:white;border-radius:12px;padding:20px;box-shadow:0 4px 12px rgba(0,0,0,0.06);text-align:left;">
             <p>✅ <strong>ไม่มีค้างชำระ</strong></p>
@@ -79,6 +82,7 @@ window.searchByHouseNumber = async function (houseNumber) {
         `;
       }
     } else {
+      // ไม่พบบ้านเลขที่
       resultDiv.innerHTML = `<p style="color:red;">❌ ไม่พบข้อมูลบ้านเลขที่ ${houseNumber}</p>`;
     }
 
@@ -88,6 +92,7 @@ window.searchByHouseNumber = async function (houseNumber) {
   }
 };
 
+// ฟังก์ชันแสดงข้อมูลของผู้ใช้เมื่อเข้าสู่ระบบ
 window.showUserData = function () {
   const user = JSON.parse(localStorage.getItem("loggedInUser"));
   if (!user) {
@@ -100,6 +105,7 @@ window.showUserData = function () {
   searchByHouseNumber(houseId);
 };
 
+// ฟังก์ชันออกจากระบบ
 window.logout = function () {
   localStorage.removeItem("loggedInUser");
   window.location.href = "login.html";
