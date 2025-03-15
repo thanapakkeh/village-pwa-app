@@ -3,12 +3,20 @@ window.searchByHouseNumber = async function (houseNumber) {
   resultDiv.innerHTML = "";
 
   try {
-    const res = await fetch("data.json");
+    // อ่าน URL API จาก data.json
+    const sourceRes = await fetch("data.json");
+    const sourceData = await sourceRes.json();
+    const apiUrl = sourceData.source;
+
+    // ดึงข้อมูลจาก API Google Sheet
+    const res = await fetch(apiUrl);
     const data = await res.json();
 
+    // ค้นหาบ้านเลขที่
     const match = data.find(d => d["บ้านเลขที่"] === houseNumber);
 
-    if (match && match["ยอดรวมค้างชำระ"] && match["ยอดรวมค้างชำระ"] !== "0") {
+    if (match) {
+      // ถ้ามีข้อมูลบ้าน
       resultDiv.innerHTML = `
         <div style="background:white;border-radius:12px;padding:20px;box-shadow:0 4px 12px rgba(0,0,0,0.06);text-align:left;">
           <p style="font-size: 1.2rem;"><strong>📅 ช่วงค้างชำระ:</strong> ${match["ช่วงค้างชำระ"]}</p>
@@ -34,7 +42,8 @@ window.searchByHouseNumber = async function (houseNumber) {
           </div>
         </div>
       `;
-    } else if (match) {
+    } else {
+      // ถ้าไม่มีข้อมูลบ้าน
       resultDiv.innerHTML = `
         <div style="background:white;border-radius:12px;padding:20px;box-shadow:0 4px 12px rgba(0,0,0,0.06);text-align:left;font-size:1rem;line-height:1.6;">
           <p>✅ <strong>ไม่มีค้างชำระ</strong></p>
@@ -50,9 +59,8 @@ window.searchByHouseNumber = async function (houseNumber) {
           </div>
         </div>
       `;
-    } else {
-      resultDiv.innerHTML = `<p style="color:red;">❌ ไม่พบข้อมูลบ้านเลขที่ ${houseNumber}</p>`;
     }
+
   } catch (error) {
     console.error("❌ เกิดข้อผิดพลาด:", error);
     resultDiv.innerHTML = `<p style="color:red;">❌ เกิดข้อผิดพลาดในการโหลดข้อมูล</p>`;
@@ -75,4 +83,3 @@ window.logout = function () {
   localStorage.removeItem("loggedInUser");
   window.location.href = "login.html";
 };
-
