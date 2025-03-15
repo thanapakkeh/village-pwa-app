@@ -3,14 +3,13 @@ window.searchByHouseNumber = async function (houseNumber) {
   resultDiv.innerHTML = "";
 
   try {
-    const response = await fetch("https://script.google.com/macros/s/AKfycbyEH7caAh9b3Iz5onXrIBtZiCUbv9KZ-2-vyagUr-88jmceLV3c-hFkVQHHAVQjIYkInA/exec");
-    const data = await response.json();
+    const res = await fetch("data.json");
+    const data = await res.json();
 
     const match = data.find(d => d["บ้านเลขที่"] === houseNumber);
 
-    if (match) {
-      if (match["ยอดรวมค้างชำระ"] && match["ยอดรวมค้างชำระ"] !== "0") {
-        resultDiv.innerHTML = `
+    if (match && match["ยอดรวมค้างชำระ"] && match["ยอดรวมค้างชำระ"] !== "0") {
+      resultDiv.innerHTML = `
         <div style="background:white;border-radius:12px;padding:20px;box-shadow:0 4px 12px rgba(0,0,0,0.06);text-align:left;">
           <p style="font-size: 1.2rem;"><strong>📅 ช่วงค้างชำระ:</strong> ${match["ช่วงค้างชำระ"]}</p>
 
@@ -34,11 +33,10 @@ window.searchByHouseNumber = async function (houseNumber) {
             </a>
           </div>
         </div>
-        `;
-      } else {
-        // กรณีไม่มียอดค้างชำระ
-        resultDiv.innerHTML = `
-        <div style="background:white;border-radius:12px;padding:20px;box-shadow:0 4px 12px rgba(0,0,0,0.06);text-align:left;">
+      `;
+    } else if (match) {
+      resultDiv.innerHTML = `
+        <div style="background:white;border-radius:12px;padding:20px;box-shadow:0 4px 12px rgba(0,0,0,0.06);text-align:left;font-size:1rem;line-height:1.6;">
           <p>✅ <strong>ไม่มีค้างชำระ</strong></p>
           <p>💰 <strong>ยอดรวมค้างชำระ:</strong> 0 บาท</p>
           <p style="font-size:0.9rem;color:#666;margin-top:8px;">📅 อัปเดตล่าสุด: 28 ก.พ. 68</p>
@@ -46,13 +44,12 @@ window.searchByHouseNumber = async function (houseNumber) {
           <div style="margin-top:25px;">
             <a href="contact.html"
               style="background:#3b82f6;color:white;padding:12px;border-radius:8px;
-                     text-align:center;text-decoration:none;font-weight:bold;display:block;">
+                    text-align:center;text-decoration:none;font-weight:bold;display:block;">
               📞 ติดต่อเจ้าหน้าที่
             </a>
           </div>
         </div>
-        `;
-      }
+      `;
     } else {
       resultDiv.innerHTML = `<p style="color:red;">❌ ไม่พบข้อมูลบ้านเลขที่ ${houseNumber}</p>`;
     }
@@ -60,5 +57,22 @@ window.searchByHouseNumber = async function (houseNumber) {
     console.error("❌ เกิดข้อผิดพลาด:", error);
     resultDiv.innerHTML = `<p style="color:red;">❌ เกิดข้อผิดพลาดในการโหลดข้อมูล</p>`;
   }
+};
+
+window.showUserData = function () {
+  const user = JSON.parse(localStorage.getItem("loggedInUser"));
+  if (!user) {
+    window.location.href = "login.html";
+    return;
+  }
+
+  const houseId = user.house;
+  document.getElementById("house-id").innerText = `🏠 บ้านเลขที่: ${houseId}`;
+  searchByHouseNumber(houseId);
+};
+
+window.logout = function () {
+  localStorage.removeItem("loggedInUser");
+  window.location.href = "login.html";
 };
 
