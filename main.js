@@ -28,7 +28,7 @@ window.searchByHouseNumber = async function (houseNumber) {
           line-height: 1.6;
         ">
           <p>📅 <strong>ช่วงค้างชำระ:</strong> ${matchWithData["ช่วงค้างชำระ"]}</p>
-          <p style="font-size:1.5rem>💰 <strong>ยอดรวมค้างชำระ:</strong> ${matchWithData["ยอดรวมค้างชำระ"]} บาท</p>
+          <p>💰 <strong>ยอดรวมค้างชำระ:</strong> ${matchWithData["ยอดรวมค้างชำระ"]} บาท</p>
           <p style="font-size:0.9rem; color:#666; margin-top:8px;">📅 อัปเดตล่าสุด: ${matchWithData["อัปเดตล่าสุด"]}</p>
 
           <div style="margin-top: 25px; display: flex; flex-direction: column; gap: 12px;">
