@@ -3,20 +3,23 @@ window.searchByHouseNumber = async function (houseNumber) {
   resultDiv.innerHTML = "";
 
   try {
-    // โหลดลิงก์ API จาก data.json
-    const dataSource = await fetch("data.json");
-    const { source } = await dataSource.json();
+    // ดึงข้อมูลจาก 2 ชีตผ่าน elk.sh
+    const [dueRes, clearRes] = await Promise.all([
+      fetch("https://opensheet.elk.sh/18GPxoGr7cZh1-MofAlSlHUPvZdq0RLDEMUiY7EP4LCo/ค้างชำระ"),
+      fetch("https://opensheet.elk.sh/18GPxoGr7cZh1-MofAlSlHUPvZdq0RLDEMUiY7EP4LCo/ไม่ค้างชำระ")
+    ]);
 
-    // โหลดข้อมูลบ้านทั้งหมดจากลิงก์ API
-    const response = await fetch(source);
-    const data = await response.json();
+    const dueData = await dueRes.json();
+    const clearData = await clearRes.json();
 
-    // ค้นหาบ้านที่ตรงกับผู้ใช้
-    const match = data.find(d => d["บ้านเลขที่"] === houseNumber);
+    // รวมข้อมูลทั้งหมด
+    const allData = [...dueData, ...clearData];
+
+    // หาบ้านที่ตรงกับผู้ใช้
+    const match = allData.find(d => d["บ้านเลขที่"] === houseNumber);
 
     if (match) {
       if (match["สถานะ"] === "ค้างชำระ") {
-        // แสดงข้อมูลค้างชำระ
         resultDiv.innerHTML = `
           <div style="background:white;border-radius:12px;padding:20px;box-shadow:0 4px 12px rgba(0,0,0,0.06);text-align:left;">
             <p style="font-size: 1.2rem;"><strong>📅 ช่วงค้างชำระ:</strong> ${match["ช่วงค้างชำระ"] || "-"}</p>
@@ -47,7 +50,6 @@ window.searchByHouseNumber = async function (houseNumber) {
           </div>
         `;
       } else {
-        // แสดงกรณีไม่มีค้างชำระ
         resultDiv.innerHTML = `
           <div style="background:white;border-radius:12px;padding:20px;box-shadow:0 4px 12px rgba(0,0,0,0.06);text-align:left;">
             <p>✅ <strong>ไม่มีค้างชำระ</strong></p>
@@ -67,7 +69,6 @@ window.searchByHouseNumber = async function (houseNumber) {
         `;
       }
     } else {
-      // ไม่พบบ้านเลขที่
       resultDiv.innerHTML = `<p style="color:red;">❌ ไม่พบข้อมูลบ้านเลขที่ ${houseNumber}</p>`;
     }
 
@@ -93,4 +94,3 @@ window.logout = function () {
   localStorage.removeItem("loggedInUser");
   window.location.href = "login.html";
 };
-
