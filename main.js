@@ -1,30 +1,34 @@
-window.searchByHouseNumber = async function (houseNumber) {
+// ฟังก์ชันหลักสำหรับตรวจสอบสถานะบ้านเลขที่
+async function fetchAndMergeData(houseNumber) {
   const resultDiv = document.getElementById("result");
-  resultDiv.innerHTML = "";
+  resultDiv.innerHTML = ""; // ล้างผลลัพธ์เก่า
 
   try {
-    // โหลดข้อมูลจาก 2 Web App
+    // ดึงข้อมูลจาก API ทั้งสอง
     const [dueRes, clearRes] = await Promise.all([
-      fetch("https://script.google.com/macros/s/AKfycbzymSwxn-V8f9v7iJuEAv9kPLi71Ln1lXSAXY-Psp9n6LVcmAmipLMieud93IrbpKVyrg/exec"),
-      fetch("https://script.google.com/macros/s/AKfycbwj442jIMktDBpnzpeIKNbhRqtsQN1M3UIB2im1WUIIFqxN1iMGORWXNdy1djQ9zoGPEg/exec")
+      fetch("https://script.google.com/macros/s/AKfycbwRRSTSNrdWem_3SXH9wM6otmVIfXNHLdvoIf3piMsHc7UhktlbOA5K0nxBEueDojYGew/exec"),
+      fetch("https://script.google.com/macros/s/AKfycby3TgbRDMOmUu4Fox9VD_swTWjnG9mIbDV-h-n2dL9Fan3mYNrXt_F0McvzYzA5-nH1TA/exec")
     ]);
 
-    // ตรวจสอบสถานะการโหลดข้อมูล
+    // ตรวจสอบว่าโหลดข้อมูลสำเร็จหรือไม่
     if (!dueRes.ok || !clearRes.ok) {
       throw new Error("ไม่สามารถโหลดข้อมูลจาก API");
     }
 
+    // แปลงข้อมูลเป็น JSON
     const dueData = await dueRes.json();
     const clearData = await clearRes.json();
 
-    // รวมข้อมูล: ให้ค้างชำระทับ
+    // รวมข้อมูลโดยให้ "ค้างชำระ" ทับ "ไม่ค้างชำระ"
     const houseMap = {};
-    clearData.forEach(i => houseMap[i["บ้านเลขที่"]] = i);
-    dueData.forEach(i => houseMap[i["บ้านเลขที่"]] = i);
+    clearData.forEach(item => houseMap[item["บ้านเลขที่"]] = item);
+    dueData.forEach(item => houseMap[item["บ้านเลขที่"]] = item);
 
+    // ค้นหาบ้านเลขที่ในข้อมูลรวม
     const match = houseMap[houseNumber];
     const status = (match?.["สถานะ"] || "").trim();
 
+    // แสดงผลลัพธ์
     if (!match) {
       resultDiv.innerHTML = `<p style="color:red;">❌ ไม่พบข้อมูลบ้านเลขที่ ${houseNumber}</p>`;
     } else if (status.includes("มียอด")) {
@@ -42,19 +46,31 @@ window.searchByHouseNumber = async function (houseNumber) {
           <p><strong>📅 อัปเดตล่าสุด:</strong> ${formatThaiDate(match["อัปเดตล่าสุด"])}</p>
         </div>`;
     }
-  } catch (err) {
-    console.error("Error:", err);
-    resultDiv.innerHTML = `<p style="color:red;">❌ โหลดข้อมูลผิดพลาด: ${err.message}</p>`;
+  } catch (error) {
+    console.error("Error:", error);
+    resultDiv.innerHTML = `<p style="color:red;">❌ โหลดข้อมูลผิดพลาด: ${error.message}</p>`;
   }
-};
+}
 
+// ฟังก์ชันจัดรูปแบบวันที่เป็นภาษาไทย
 function formatThaiDate(dateString) {
+  if (!dateString) return "-"; // จัดการกรณีวันที่ว่างเปล่า
   try {
     const d = new Date(dateString);
     const months = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.",
                     "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."];
     return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear() + 543}`;
   } catch {
-    return dateString || "-";
+    return "-";
   }
+}
+
+// ฟังก์ชันสำหรับตรวจสอบบ้านเลขที่เมื่อผู้ใช้กดปุ่ม
+function checkStatus() {
+  const houseNumber = document.getElementById("houseNumber").value.trim();
+  if (!houseNumber) {
+    alert("กรุณากรอกบ้านเลขที่");
+    return;
+  }
+  fetchAndMergeData(houseNumber);
 }
