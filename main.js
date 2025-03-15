@@ -17,7 +17,7 @@ window.searchByHouseNumber = async function (houseNumber) {
   resultDiv.innerHTML = "";
 
   try {
-    // ✅ โหลดข้อมูลจาก 2 Web App
+    // ✅ โหลดข้อมูลจาก Web App ค้างชำระ + ไม่ค้างชำระ
     const [dueRes, clearRes] = await Promise.all([
       fetch("https://script.google.com/macros/s/AKfycbzymSwxn-V8f9v7iJuEAv9kPLi71Ln1lXSAXY-Psp9n6LVcmAmipLMieud93IrbpKVyrg/exec"),
       fetch("https://script.google.com/macros/s/AKfycbwj442jIMktDBpnzpeIKNbhRqtsQN1M3UIB2im1WUIIFqxN1iMGORWXNdy1djQ9zoGPEg/exec")
@@ -26,7 +26,7 @@ window.searchByHouseNumber = async function (houseNumber) {
     const dueData = await dueRes.json();
     const clearData = await clearRes.json();
 
-    // ✅ รวมข้อมูลโดยให้ "ค้างชำระ" ทับ "ไม่ค้างชำระ"
+    // ✅ รวมข้อมูล โดยให้ "ค้างชำระ" ทับ "ไม่ค้างชำระ"
     const houseMap = {};
     clearData.forEach(item => {
       houseMap[item["บ้านเลขที่"]] = item;
@@ -41,7 +41,7 @@ window.searchByHouseNumber = async function (houseNumber) {
       const status = (match["สถานะ"] || "").trim();
 
       if (status.includes("มียอด")) {
-        // ✅ มีค้างชำระ
+        // ✅ แสดงกรณีค้างชำระ
         resultDiv.innerHTML = `
           <div style="background:white;border-radius:12px;padding:20px;box-shadow:0 4px 12px rgba(0,0,0,0.06);text-align:left;">
             <p style="font-size: 1.2rem;"><strong>📅 ช่วงค้างชำระ:</strong> ${match["ช่วงค้างชำระ"] || "-"}</p>
@@ -49,7 +49,7 @@ window.searchByHouseNumber = async function (houseNumber) {
             <div style="margin: 20px 0 10px;">
               <p style="font-size: 1.1rem; font-weight: bold; color:#111; margin-bottom: 5px;">💰 ยอดค้างชำระ</p>
               <p style="font-size: 1.8rem; font-weight: bold; color:#dc2626; margin: 0;">
-                ${match["ยอดค้างชำระ"] || 0} บาท
+                ${match["ยอดรวมค้างชำระ"] || 0} บาท
               </p>
             </div>
 
@@ -72,7 +72,7 @@ window.searchByHouseNumber = async function (houseNumber) {
           </div>
         `;
       } else {
-        // ✅ ไม่ค้างชำระ
+        // ✅ แสดงกรณีไม่ค้างชำระ
         resultDiv.innerHTML = `
           <div style="background:white;border-radius:12px;padding:20px;box-shadow:0 4px 12px rgba(0,0,0,0.06);text-align:left;">
             <p>✅ <strong>ไม่มีค้างชำระ</strong></p>
