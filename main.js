@@ -3,7 +3,7 @@ window.searchByHouseNumber = async function (houseNumber) {
   resultDiv.innerHTML = "";
 
   try {
-    // ดึงข้อมูลจาก 2 ชีตผ่าน elk.sh
+    // โหลดข้อมูลจากทั้ง 2 ชีต
     const [dueRes, clearRes] = await Promise.all([
       fetch("https://opensheet.elk.sh/18GPxoGr7cZh1-MofAlSlHUPvZdq0RLDEMUiY7EP4LCo/ค้างชำระ"),
       fetch("https://opensheet.elk.sh/18GPxoGr7cZh1-MofAlSlHUPvZdq0RLDEMUiY7EP4LCo/ไม่ค้างชำระ")
@@ -12,11 +12,21 @@ window.searchByHouseNumber = async function (houseNumber) {
     const dueData = await dueRes.json();
     const clearData = await clearRes.json();
 
-    // รวมข้อมูลทั้งหมด
-    const allData = [...dueData, ...clearData];
+    // สร้าง map บ้านเลขที่
+    const houseMap = {};
 
-    // หาบ้านที่ตรงกับผู้ใช้
-    const match = allData.find(d => d["บ้านเลขที่"] === houseNumber);
+    // ใส่ข้อมูลจาก "ไม่ค้างชำระ" ก่อน
+    clearData.forEach(item => {
+      houseMap[item["บ้านเลขที่"]] = item;
+    });
+
+    // ใส่ข้อมูลจาก "ค้างชำระ" ทับลงไป (กรณีบ้านซ้ำ)
+    dueData.forEach(item => {
+      houseMap[item["บ้านเลขที่"]] = item;
+    });
+
+    // ค้นหาข้อมูลของบ้านเลขที่ที่ต้องการ
+    const match = houseMap[houseNumber];
 
     if (match) {
       if (match["สถานะ"] === "ค้างชำระ") {
