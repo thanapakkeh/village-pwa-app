@@ -16,24 +16,26 @@
   </div>
 
   <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;margin-top:30px;">
-  <input type="text" id="username" placeholder="รหัสผู้ใช้ เช่น 399001"
-    style="width: 300px; max-width: 90%; padding: 12px; border-radius: 8px; border: 1px solid #ccc; margin-bottom: 10px;" />
+    <input type="text" id="username" placeholder="รหัสผู้ใช้ เช่น 399001"
+      style="width: 300px; max-width: 90%; padding: 12px; border-radius: 8px; border: 1px solid #ccc; margin-bottom: 10px;" />
 
-  <input type="password" id="password" placeholder="รหัสผ่าน"
-    style="width: 300px; max-width: 90%; padding: 12px; border-radius: 8px; border: 1px solid #ccc; margin-bottom: 20px;" />
+    <input type="password" id="password" placeholder="รหัสผ่าน"
+      style="width: 300px; max-width: 90%; padding: 12px; border-radius: 8px; border: 1px solid #ccc; margin-bottom: 20px;" />
 
-  <button onclick="login()" style="
-      width: 300px; max-width: 90%;
-      padding: 12px;
-      background-color: #3b82f6;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-weight: bold;
-      cursor: pointer;">
-    เข้าสู่ระบบ
-  </button>
-</div>
+    <button onclick="login()" style="
+        width: 300px; max-width: 90%;
+        padding: 12px;
+        background-color: #3b82f6;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+        cursor: pointer;">
+      เข้าสู่ระบบ
+    </button>
+
+    <p id="loginStatus" style="margin-top:15px;font-weight:bold;"></p>
+  </div>
 
   <script>
     async function login() {
@@ -47,6 +49,9 @@
         return;
       }
 
+      status.innerText = "กำลังตรวจสอบข้อมูล...";
+      status.style.color = "#555";
+
       try {
         const res = await fetch("users.json");
         const users = await res.json();
@@ -54,7 +59,11 @@
 
         if (found) {
           localStorage.setItem("loggedInUser", JSON.stringify(found));
-          window.location.href = "index.html";
+          status.innerText = "เข้าสู่ระบบสำเร็จ กำลังเข้าสู่ระบบ...";
+          status.style.color = "green";
+          setTimeout(() => {
+            window.location.href = "index.html";
+          }, 800);
         } else {
           status.innerText = "รหัสผู้ใช้หรือรหัสผ่านไม่ถูกต้อง";
           status.style.color = "red";
@@ -67,3 +76,4 @@
   </script>
 </body>
 </html>
+
