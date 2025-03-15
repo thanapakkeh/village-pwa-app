@@ -18,32 +18,25 @@ window.searchByHouseNumber = async function (houseNumber) {
 
     if (matchWithData) {
       resultDiv.innerHTML = `
-        <div style="
-          background: white;
-          border-radius: 12px;
-          padding: 20px;
-          box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-          text-align: left;
-          font-size: 1.0rem;
-          line-height: 1.6;
-        ">
-          <p>📅 <strong>ช่วงค้างชำระ:</strong> ${matchWithData["ช่วงค้างชำระ"]}</p>
-          <p>💰 <strong>ยอดรวมค้างชำระ:</strong> ${matchWithData["ยอดรวมค้างชำระ"]} บาท</p>
-          <p style="font-size:0.9rem; color:#666; margin-top:8px;">📅 อัปเดตล่าสุด: ${matchWithData["อัปเดตล่าสุด"]}</p>
+  <div style="background:white;border-radius:12px;padding:20px;box-shadow:0 4px 12px rgba(0,0,0,0.06);text-align:left;">
+    <p style="font-size: 1.2rem;"><strong>📅 ช่วงค้างชำระ:</strong> ${matchWithData["ช่วงค้างชำระ"]}</p>
+    <p style="font-size: 1.3rem; font-weight: bold; color:#dc2626;">💰 ยอดรวมค้างชำระ: ${matchWithData["ยอดรวมค้างชำระ"]} บาท</p>
+    <p style="font-size:0.95rem;color:#666;margin-top:8px;">📅 อัปเดตล่าสุด: ${matchWithData["อัปเดตล่าสุด"]}</p>
 
-          <div style="margin-top: 25px; display: flex; flex-direction: column; gap: 12px;">
-            <a href="payment.html"
-              style="background: #10b981; color: white; padding: 12px; border-radius: 8px;
-                     text-align: center; text-decoration: none; font-weight: bold;">
-              💳 ชำระค่าส่วนกลาง
-            </a>
-            <a href="contact.html"
-              style="background: #3b82f6; color: white; padding: 12px; border-radius: 8px;
-                     text-align: center; text-decoration: none; font-weight: bold;">
-              📞 ติดต่อเจ้าหน้าที่
-            </a>
-          </div>
-        </div>
+    <div style="margin-top:25px; display:flex; flex-direction:column; gap:12px;">
+      <a href="payment.html"
+        style="background:#10b981;color:white;padding:12px;border-radius:8px;
+              text-align:center;text-decoration:none;font-weight:bold;">
+        💳 ชำระค่าส่วนกลาง
+      </a>
+      <a href="contact.html"
+        style="background:#3b82f6;color:white;padding:12px;border-radius:8px;
+              text-align:center;text-decoration:none;font-weight:bold;">
+        📞 ติดต่อเจ้าหน้าที่
+      </a>
+    </div>
+  </div>
+`;
       `;
     } else if (matchWithoutData) {
       resultDiv.innerHTML = `
