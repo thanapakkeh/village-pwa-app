@@ -1,4 +1,3 @@
-// ฟังก์ชันหลักสำหรับตรวจสอบสถานะบ้านเลขที่
 async function fetchAndMergeData(houseNumber) {
   const resultDiv = document.getElementById("result");
   resultDiv.innerHTML = ""; // ล้างผลลัพธ์เก่า
