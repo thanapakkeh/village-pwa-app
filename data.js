@@ -1,12 +1,26 @@
-const houseData = {
-  "399/1": {
-    "ช่วงค้างชำระ": "ม.ค. 2568 - มี.ค. 2568",
-    "ยอดรวมค้างชำระ": "1,500",
-    "อัปเดตล่าสุด": "16 มี.ค. 2568"
-  },
-  "399/269": {
-    "ช่วงค้างชำระ": "ก.พ. 2568 - มี.ค. 2568",
-    "ยอดรวมค้างชำระ": "2,000",
-    "อัปเดตล่าสุด": "15 มี.ค. 2568"
-  }
+const data = {
+  dueData: [],
+  clearData: [],
 };
+
+// ฟังก์ชันโหลดข้อมูล JSON
+async function loadData() {
+  try {
+    const [dueResponse, clearResponse] = await Promise.all([
+      fetch("houses_with_data.json"),
+      fetch("houses_without_data.json")
+    ]);
+
+    if (!dueResponse.ok || !clearResponse.ok) {
+      throw new Error("โหลดข้อมูล JSON ผิดพลาด");
+    }
+
+    data.dueData = await dueResponse.json();
+    data.clearData = await clearResponse.json();
+  } catch (error) {
+    console.error("โหลดข้อมูลผิดพลาด:", error);
+  }
+}
+
+// เรียกฟังก์ชันโหลดข้อมูลทันที
+loadData();
