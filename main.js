@@ -1,32 +1,19 @@
-// ฟังก์ชันโหลดข้อมูล JSON
-async function loadLocalJSON(file) {
-  const response = await fetch(file);
-  if (!response.ok) throw new Error("ไม่สามารถโหลดข้อมูลได้");
-  return response.json();
-}
+// main.js (อ่านข้อมูลจากตัวแปร data โดยตรง)
 
-// ฟังก์ชันหลักสำหรับตรวจสอบสถานะบ้านเลขที่
-async function fetchAndMergeData(houseNumber) {
+// ฟังก์ชันรวมข้อมูลและแสดงผลจากตัวแปร data
+function fetchAndMergeData(houseNumber) {
   const resultDiv = document.getElementById("result");
-  resultDiv.innerHTML = ""; // ล้างผลลัพธ์เก่า
+  resultDiv.innerHTML = "";
 
   try {
-    // โหลดข้อมูล JSON จากไฟล์
-    const [dueData, clearData] = await Promise.all([
-      loadLocalJSON("houses_with_data.json"),
-      loadLocalJSON("houses_without_data.json")
-    ]);
-
-    // รวมข้อมูลโดยให้ "ค้างชำระ" ทับ "ไม่ค้างชำระ"
+    // รวมข้อมูลจากตัวแปร data
     const houseMap = {};
-    clearData.forEach(item => houseMap[item["บ้านเลขที่"]] = item);
-    dueData.forEach(item => houseMap[item["บ้านเลขที่"]] = item);
+    data.clearData.forEach(item => houseMap[item["บ้านเลขที่"]] = item);
+    data.dueData.forEach(item => houseMap[item["บ้านเลขที่"]] = item);
 
-    // ค้นหาบ้านเลขที่ในข้อมูลรวม
     const match = houseMap[houseNumber];
     const status = (match?.["สถานะ"] || "").trim();
 
-    // แสดงผลลัพธ์
     if (!match) {
       resultDiv.innerHTML = `<p style="color:red;">❌ ไม่พบข้อมูลบ้านเลขที่ ${houseNumber}</p>`;
     } else if (status.includes("มียอด")) {
@@ -53,14 +40,10 @@ async function fetchAndMergeData(houseNumber) {
 // ฟังก์ชันจัดรูปแบบวันที่เป็นภาษาไทย
 function formatThaiDate(dateString) {
   if (!dateString) return "-";
-  try {
-    const d = new Date(dateString);
-    const months = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.",
-                    "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."];
-    return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear() + 543}`;
-  } catch {
-    return "-";
-  }
+  const d = new Date(dateString);
+  const months = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.",
+                  "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."];
+  return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear() + 543}`;
 }
 
 // ฟังก์ชันสำหรับตรวจสอบบ้านเลขที่เมื่อผู้ใช้กดปุ่ม
@@ -72,4 +55,3 @@ function checkStatus() {
   }
   fetchAndMergeData(houseNumber);
 }
-
