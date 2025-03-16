@@ -1,3 +1,14 @@
-{
-  "source": "https://script.google.com/macros/s/AKfycbzdi4Q2Aw8rZJ-cjvRwChUpMfhFrpJpeGwZwJoclvsAL2fgy-hpB32XT0Ir7WBK15GyUA/exec"
+// data.js
+const data = {
+  dueData: [],
+  clearData: [],
+};
+
+// โหลดข้อมูลจาก JSON
+async function loadData() {
+  data.dueData = await fetch('houses_with_data.json').then(res => res.json());
+  data.clearData = await fetch('houses_without_data.json').then(res => res.json());
 }
+
+// โหลดข้อมูลทันทีเมื่อเปิดแอป
+loadData();
